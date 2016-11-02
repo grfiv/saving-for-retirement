@@ -63,10 +63,10 @@
         <form>
             <!-- input fields -->
             <div class="form-group col-xs-12">
-                <label for="yrs-to-ret">Years to retirement:</label>
-                <input type="text" name="yrs-to-ret" id="yrs-to-ret" value="10"
+                <label for="yrs-to-ret">Years TO retirement:</label>
+                <input type="text" name="yrs-to-ret" id="yrs-to-ret" value="20"
                        placeholder="How many years until you retire?"
-                       data-v-min="0" data-v-max="99" data-w-empty="zero">
+                       data-v-min="0" data-v-max="99" data-w-empty="zero"><small>&nbsp;0 if retired</small>
             </div>
             <div class="form-group col-xs-12">
                 <label for="portfolio">Current savings:</label>
@@ -76,7 +76,7 @@
             </div>
             <div class="form-group col-xs-12">
                 <label for="inflation">Inflation:</label>
-                <input type="text" name="inflation" id="inflation" value="3"
+                <input type="text" name="inflation" id="inflation" value="2"
                        placeholder="Expected rate of inflation?"
                        data-a-sep="" data-a-sign="%" data-p-sign="s" data-v-min="0" data-v-max="100" data-w-empty="zero"
                        data-l-zero="deny">
@@ -92,13 +92,13 @@
             <hr>
 
             <div class="form-group col-xs-12">
-                <label for="yrs-in-ret">Years in retirement:</label>
-                <input type="text" name="yrs-in-ret" id="yrs-in-ret" value="30"
+                <label for="yrs-in-ret">Years IN retirement:</label>
+                <input type="text" name="yrs-in-ret" id="yrs-in-ret" value="20"
                        placeholder="How many years will you be retired?"
                        data-v-min="0" data-v-max="99" data-w-empty="zero">
             </div>
             <div class="form-group col-xs-12">
-                <label for="income">Expected income:</label>
+                <label for="income">Expected income at retirement:</label>
                 <input type="text" name="income" id="income" value="100000"
                        placeholder="How much income will you need?"
                        data-a-sign="$" data-v-min="0" data-v-max="1000000" data-w-empty="zero">
@@ -161,16 +161,16 @@
             <p data-content="savings_blurb"></p>
 
             <!-- show additional options for savings -->
-            <button id="middle-inner-options-return-btn" class="inner-options-return-btn" type="button" class="btn btn-default btn-sm" style="margin-bottom: 10px;">
+            <button id="middle-inner-options-return-btn" type="button" class="inner-options-return-btn btn btn-default btn-sm" style="margin-bottom: 10px;">
                 <span class="glyphicon glyphicon-arrow-right"></span> Return
             </button>
             <br>
 
             <input type="button" id="options-btn" value="Additional Options">
             <div id="options" style="display:none;">
-                <p>The <strong>Required Savings</strong> assumes it's exactly enough and you spend it all by the end of your retirement;
+                <p>The <strong>Required Savings</strong> assumes it's exactly enough and you'll spend it all by the end of your retirement;
                     <br>
-                   but you may need even more than that if you live longer or work fewer years or take out more.
+                   but you may need even more than that if you live longer, work fewer years or take out more.
                 </p>
                 <table class="table table-bordered">
                     <caption>End with the same amount as you start with:</caption>
@@ -184,7 +184,7 @@
                         </tr>
                     </table>
                     <table class="table table-bordered">
-                        <caption>End with the same amount but adjusted for inflation:</caption>
+                        <caption>End with the same amount adjusted for inflation:</caption>
                         <tr>
                             <th>Total Savings</th>
                             <th>How Much To Save Each Month</th>
@@ -195,7 +195,7 @@
                         </tr>
                     </table>
 
-                <button class="inner-options-return-btn" type="button" class="btn btn-default btn-sm">
+                <button type="button" class="inner-options-return-btn btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-arrow-right"></span> Return
                 </button>
                 </div>
@@ -203,7 +203,7 @@
 
     </main>
 
-    <footer class="page-footer btn btn-md btn-default" style="margin-top:5px;">
+    <footer class="page-footer btn btn-md btn-default" style="margin-top:10px;">
         <a href="http://www.georgefisheradvisors.com">George Fisher Advisors LLC</a>
     </footer>
 
@@ -228,7 +228,7 @@
         </p>
 
         <dl>
-            <dt>Years to retirement</dt>
+            <dt>Years TO retirement</dt>
             <dd>How many more years will you be earning an income?
                 <br>
                 &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
@@ -244,10 +244,10 @@
             <dd>What annual return do you expect to make on your investment?</dd>
 
             <hr>
-            <dt>Years in retirement</dt>
+            <dt>Years IN retirement</dt>
             <dd>How many years do you expect to live in retirement?</dd>
 
-            <dt>Expected Income</dt>
+            <dt>Expected Income in retirement</dt>
             <dd>How much money will you need every year in retirement?
                 <ul>
                     <li>Use today's dollars; the calculator will figure out inflation.</li>
@@ -256,7 +256,7 @@
             </dd>
         </dl>
 
-        <button type="button" class="return-btn btn btn-default btn-sm">
+        <button type="button" class="return-btn btn btn-default btn-sm" style="margin-bottom:10px;">
             <span class="glyphicon glyphicon-arrow-right"></span> Return
         </button>
 
@@ -293,12 +293,12 @@
         $('#pagethree').show();
     });
 
-    // Reset button refreshes the whole package from the server (true)
+    // Reset button refreshes the whole package from the server ()
     $('#reset-btn').click(function() {
         $('#pageone').show();
         $('#pagetwo').hide();
         $('#pagethree').hide();
-        location.reload(true);
+        location.reload();
     });
 
     // =======================================================
@@ -340,13 +340,20 @@
         var yrsInRet_num = parseInt(yrsInRet);
         var income_num = parseFloat(income.replace(/[\$\,]/g, ''));
 
-        // complain and refresh if years in retirement is zero
+        // investment return must be greater than inflation
+        if (invReturn_num <= inflation_num) {
+            alert("Investment Return must be greater than inflation");
+            $('#pageone').show();
+            $('#pagetwo').hide();
+            $('#pagethree').hide();
+        }
+
+        // complain if years in retirement is zero
         if (yrsInRet_num == 0) {
             alert("Years In Retirement should be 1 or greater");
             $('#pageone').show();
             $('#pagetwo').hide();
             $('#pagethree').hide();
-            location.reload(true);
         }
 
         // format retirement year and life expectancy
@@ -378,7 +385,8 @@
         if (retYear == "Currently retired") {
             savings_blurb = "Your savings are sufficient."
         } else {
-            savings_blurb = "Your savings will be enough when you retire in " + retYear;
+            savings_blurb = "Your savings will be enough when you retire in " + retYear + " (" +
+                    '$' + Number(FV(portfolio_num, invReturn_num, yrsToRet_num).toFixed(0)).toLocaleString() + ")";
         }
 
         var minPortMonthly = 0;
@@ -387,11 +395,11 @@
             if (retYear == "Currently retired") {
                 savings_blurb = "You have not saved enough to take out as much as you planned."
             } else {
-                savings_blurb = "You need to save in order to have enough when you retire in "
-                        + retYear + "<br>" +
-                        "Your current savings will only grow to " +
+                savings_blurb = "You will need " + minRetPortfolio_fmt + " when you retire in "
+                        + retYear +
+                        " but your current savings will only grow to " +
                         '$' + Number(FV(portfolio_num, invReturn_num, yrsToRet_num).toFixed(0)).toLocaleString()
-                         + " without saving more";
+                         + ", so you need to save " + '$' + Number(minPortMonthly.toFixed(0)).toLocaleString()  + " per month";
             }
         }
         var minPortMonthly_fmt = '$' + Number(minPortMonthly.toFixed(0)).toLocaleString();
