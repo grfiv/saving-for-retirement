@@ -27,13 +27,8 @@
     <!-- jQuery Template -->
     <script src="js/jquery.loadTemplate.min.js"></script> <!-- https://github.com/codepb/jquery-template -->
 
-    <!-- jQuery-confirm looks nice, requires bootstrap https://craftpip.github.io/jquery-confirm/ -->
-
     <!-- autoNumeric -->
     <script src="js/autoNumeric-min.js"></script> <!-- http://www.decorplanit.com/plugin/ -->
-
-    <!-- my own basic financial calculations -->
-    <script src="js/fincalc.js"></script>
 
     <style>
         /**
@@ -49,278 +44,363 @@
 
 </head>
 <body onload="setTimeout(function() { window.scrollTo(0, 1) }, 100);">
-<div class="container">
-<!--           -->
-<!-- Main Page -->
-<!--           -->
-<section id="pageone">
 
-    <header class="page-header" style="margin:0;padding:0;">
-        <p style="text-align: center;font-weight: bold;">Saving for retirement</p>
-    </header>
+    <div class="container">
+        <!--           -->
+        <!-- Main Page -->
+        <!--           -->
+        <section id="main-page">
 
-    <main>
-        <form>
-            <!-- input fields -->
-            <div class="form-group col-xs-12">
-                <label for="yrs-to-ret">Years TO retirement:</label>
-                <input type="text" name="yrs-to-ret" id="yrs-to-ret" value="20"
-                       placeholder="How many years until you retire?"
-                       data-v-min="0" data-v-max="99" data-w-empty="zero"><small>&nbsp;0 if retired</small>
-            </div>
-            <div class="form-group col-xs-12">
-                <label for="portfolio">Current savings:</label>
-                <input type="text" name="portfolio" id="portfolio" value="2000000"
-                       placeholder="Current amount invested?"
-                       data-a-sign="$" data-v-min="0" data-v-max="100000000" data-w-empty="zero">
-            </div>
-            <div class="form-group col-xs-12">
-                <label for="inflation">Inflation:</label>
-                <input type="text" name="inflation" id="inflation" value="2"
-                       placeholder="Expected rate of inflation?"
-                       data-a-sep="" data-a-sign="%" data-p-sign="s" data-v-min="0" data-v-max="100" data-w-empty="zero"
-                       data-l-zero="deny">
-            </div>
-            <div class="form-group col-xs-12">
-                <label for="inv-return">Investment return:</label>
-                <input type="text" name="inv-return" id="inv-return" value="5"
-                       placeholder="Expected investment return?"
-                       data-a-sep="" data-a-sign="%" data-p-sign="s" data-v-min="0" data-v-max="100" data-w-empty="zero"
-                       data-l-zero="deny">
-            </div>
+            <header class="page-header" style="margin:0;padding:0;">
+                <p style="text-align: center;font-weight: bold;">Saving for retirement</p>
+            </header>
 
-            <hr>
+            <main>
+                <form>
+                    <!-- input fields -->
+                    <div class="form-group col-xs-12">
+                        <label for="yrs-to-ret">Years TO retirement:</label>
+                        <input type="number" name="yrs-to-ret" id="yrs-to-ret" value="20" min="0"
+                               placeholder="How many years until you retire?"><small>&nbsp;0 if retired</small>
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label for="portfolio">Current savings:</label>
+                        <input type="text" name="portfolio" id="portfolio" value="1000000"
+                               placeholder="Current amount invested?"
+                               data-a-sign="$" data-v-min="0" data-v-max="100000000" data-w-empty="zero">
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label for="inflation">Inflation:</label>
+                        <input type="text" name="inflation" id="inflation" value="2"
+                               placeholder="Expected rate of inflation?"
+                               data-a-sep="" data-a-sign="%" data-p-sign="s" data-v-min="0" data-v-max="100" data-w-empty="zero"
+                               data-l-zero="deny">
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label for="inv-return">Investment return:</label>
+                        <input type="text" name="inv-return" id="inv-return" value="5"
+                               placeholder="Expected investment return?"
+                               data-a-sep="" data-a-sign="%" data-p-sign="s" data-v-min="0" data-v-max="100" data-w-empty="zero"
+                               data-l-zero="deny">
+                    </div>
 
-            <div class="form-group col-xs-12">
-                <label for="yrs-in-ret">Years IN retirement:</label>
-                <input type="text" name="yrs-in-ret" id="yrs-in-ret" value="20"
-                       placeholder="How many years will you be retired?"
-                       data-v-min="0" data-v-max="99" data-w-empty="zero">
-            </div>
-            <div class="form-group col-xs-12">
-                <label for="income">Expected income at retirement:</label>
-                <input type="text" name="income" id="income" value="100000"
-                       placeholder="How much income will you need?"
-                       data-a-sign="$" data-v-min="0" data-v-max="1000000" data-w-empty="zero">
-            </div>
+                    <hr>
 
-            <!-- buttons -->
-            <div class="form-group  col-xs-12">
-                <fieldset>
-                    <input type="button" id="calc-btn" value="Calculate">
-                    <input type="button" id="help-btn" value="Help">
-                    <input type="button" id="reset-btn" value="Reset">
-                </fieldset>
-            </div>
+                    <div class="form-group col-xs-12">
+                        <label for="yrs-in-ret">Years IN retirement:</label>
+                        <input type="number" name="yrs-in-ret" id="yrs-in-ret" value="20" min="1"
+                               placeholder="How many years will you be retired?">
+                    </div>
+                    <div class="form-group col-xs-12">
+                        <label for="income">Expected income at retirement:</label>
+                        <input type="text" name="income" id="income" value="100000"
+                               placeholder="How much income will you need?"
+                               data-a-sign="$" data-v-min="0" data-v-max="1000000" data-w-empty="zero">
+                    </div>
 
-        </form>
-    </main>
+                    <!-- buttons -->
+                    <div class="form-group  col-xs-12">
+                        <fieldset>
+                            <input type="button" id="calc-btn" value="Calculate">
+                            <input type="button" id="help-btn" value="Help">
+                            <input type="button" id="reset-btn" value="Reset">
+                        </fieldset>
+                    </div>
 
-    <footer class="page-footer btn btn-md btn-default  col-xs-12">
-        <a href="http://www.georgefisheradvisors.com">George Fisher Advisors LLC</a>
-    </footer>
+                </form>
+            </main>
+
+            <footer class="page-footer btn btn-md btn-default  col-xs-12">
+                <a href="http://www.georgefisheradvisors.com">George Fisher Advisors LLC</a>
+            </footer>
 
 
-</section>
+        </section>
 
-<!--              -->
-<!-- Results Page -->
-<!--              -->
-<section data-role="page" id="pagetwo" style="display: none;">
+        <!--              -->
+        <!-- Results Page -->
+        <!--              -->
+        <section data-role="page" id="results-page" style="display: none;">
 
-    <header class="page-header">
-       <button type="button" class="return-btn btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-arrow-right"></span> Return
-       </button>
-    </header>
+            <header class="page-header">
+               <button type="button" class="return-btn btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-arrow-right"></span> Return
+               </button>
+            </header>
 
-    <!-- consists of the jQuery Template to be rendered in the javascript below -->
-    <main>
+            <!-- consists of the jQuery Template to be rendered in the javascript below -->
+            <main>
 
-        <div id="ans-target"></div>
+                <div id="ans-target"></div>
 
-        <script id="ans-template" type="text/html">
-            <ul>
-                <li>Retirement year: <span data-content="retYear"></span></li>
-                <li>Life expectancy: <span data-content="lifeExpectancy"></span></li>
-                <!-- <li>Income required at first year of retirement: <span style="" data-content="initRetIncome_fmt"></span></li> -->
-                <li>Current savings: <span data-content="portfolio_num"></span></li>
-            </ul>
-            <div class="table-responsive">
-                <table class="table table-bordered" id="objectivesTable">
-                    <tr>
-                        <th>Required Savings</th>
-                        <th>How Much To Save Each Month</th>
-                    </tr>
-                    <tr>
-                        <td data-content="minRetPortfolio_fmt"></td>
-                        <td data-content="minPortMonthly_fmt"></td>
-                    </tr>
-                </table>
-            </div>
-            <p data-content="savings_blurb"></p>
+                <script id="ans-template" type="text/html">
+                    <ul>
+                        <li>Retirement year: <span data-content="retYear"></span></li>
+                        <li>Life expectancy: <span data-content="lifeExpectancy"></span></li>
+                        <!-- <li>Income required at first year of retirement: <span style="" data-content="initRetIncome_fmt"></span></li> -->
+                        <li>Current savings: <span data-content="portfolio_num"></span></li>
+                    </ul>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="objectivesTable">
+                            <tr>
+                                <th>Required Savings</th>
+                                <th>How Much To Save Each Month</th>
+                            </tr>
+                            <tr>
+                                <td data-content="minRetPortfolio_fmt"></td>
+                                <td data-content="minPortMonthly_fmt"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <p data-content="savings_blurb"></p>
 
-            <!-- show additional options for savings -->
-            <button id="middle-inner-options-return-btn" type="button" class="inner-options-return-btn btn btn-default btn-sm" style="margin-bottom: 10px;">
-                <span class="glyphicon glyphicon-arrow-right"></span> Return
-            </button>
-            <br>
-
-            <input type="button" id="options-btn" value="Additional Options">
-            <div id="options" style="display:none;">
-                <p>The <strong>Required Savings</strong> assumes it's exactly enough and you'll spend it all by the end of your retirement;
+                    <!-- show additional options for savings -->
+                    <button id="middle-inner-options-return-btn" type="button" class="inner-options-return-btn btn btn-default btn-sm" style="margin-bottom: 10px;">
+                        <span class="glyphicon glyphicon-arrow-right"></span> Return
+                    </button>
                     <br>
-                   but you may need even more than that if you live longer, work fewer years or take out more.
-                </p>
-                <table class="table table-bordered">
-                    <caption>End with the same amount as you start with:</caption>
-                        <tr>
-                            <th>Total Savings</th>
-                            <th>How Much To Save Each Month</th>
-                        </tr>
-                        <tr>
-                            <td data-content="maintainPortfolio_fmt"></td>
-                            <td data-content="maintainPortfolioMonthly_fmt"></td>
-                        </tr>
-                    </table>
-                    <table class="table table-bordered">
-                        <caption>End with the same amount adjusted for inflation:</caption>
-                        <tr>
-                            <th>Total Savings</th>
-                            <th>How Much To Save Each Month</th>
-                        </tr>
-                        <tr>
-                            <td data-content="maintainInfAdjPortfolio_fmt"></td>
-                            <td data-content="maintainInfAdjPortfolioMonthly_fmt"></td>
-                        </tr>
-                    </table>
 
-                <button type="button" class="inner-options-return-btn btn btn-default btn-sm">
+                    <input type="button" id="options-btn" value="Additional Options">
+                    <div id="options" style="display:none;">
+                        <p>The <strong>Required Savings</strong> assumes it's exactly enough and you'll spend it all by the end of your retirement;
+                            <br>
+                           but you may need even more than that if you live longer, work fewer years or have some unexpected expenses along the way.
+                        </p>
+                        <table class="table table-bordered">
+                            <caption>End with the same amount as you start with:</caption>
+                                <tr>
+                                    <th>Total Savings</th>
+                                    <th>How Much To Save Each Month</th>
+                                </tr>
+                                <tr>
+                                    <td data-content="maintainPortfolio_fmt"></td>
+                                    <td data-content="maintainPortfolioMonthly_fmt"></td>
+                                </tr>
+                            </table>
+                            <table class="table table-bordered">
+                                <caption>End with the same amount adjusted for inflation:</caption>
+                                <tr>
+                                    <th>Total Savings</th>
+                                    <th>How Much To Save Each Month</th>
+                                </tr>
+                                <tr>
+                                    <td data-content="maintainInfAdjPortfolio_fmt"></td>
+                                    <td data-content="maintainInfAdjPortfolioMonthly_fmt"></td>
+                                </tr>
+                            </table>
+
+                        <button type="button" class="inner-options-return-btn btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-arrow-right"></span> Return
+                        </button>
+                        </div>
+                </script>
+
+            </main>
+
+            <footer class="page-footer btn btn-md btn-default" style="margin-top:10px;">
+                <a href="http://www.georgefisheradvisors.com">George Fisher Advisors LLC</a>
+            </footer>
+
+        </section>
+
+        <!--           -->
+        <!-- Help Page -->
+        <!--           -->
+        <section data-role="page" id="help-page" style="display: none;">
+
+            <header class="page-header">
+                <button type="button" class="return-btn btn btn-default btn-sm">
                     <span class="glyphicon glyphicon-arrow-right"></span> Return
                 </button>
-                </div>
-        </script>
+            </header>
 
-    </main>
+            <main>
+                <p>This calculator figures out how much to save
+                    to have enough money after you retire.
+                    <br>
+                    (If you're already retired, it tells you whether you have enough saved).
+                </p>
 
-    <footer class="page-footer btn btn-md btn-default" style="margin-top:10px;">
-        <a href="http://www.georgefisheradvisors.com">George Fisher Advisors LLC</a>
-    </footer>
+                <dl>
+                    <dt>Years TO retirement</dt>
+                    <dd>How many more years will you be earning an income?
+                        <br>
+                        &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                        (0 if currently retired)</dd>
 
-</section>
+                    <dt>Current savings</dt>
+                    <dd>How much do you currently have saved?</dd>
 
-<!--           -->
-<!-- Help Page -->
-<!--           -->
-<section data-role="page" id="pagethree" style="display: none;">
+                    <dt>Inflation</dt>
+                    <dd>What do you expect inflation to be?</dd>
 
-    <header class="page-header">
-        <button type="button" class="return-btn btn btn-default btn-sm">
-            <span class="glyphicon glyphicon-arrow-right"></span> Return
-        </button>
-    </header>
+                    <dt>Investment return</dt>
+                    <dd>What annual return do you expect to make on your investment?</dd>
 
-    <main>
-        <p>This calculator figures out how much to save
-            to have enough money after you retire.
-            <br>
-            (If you're already retired, it tells you whether you have enough saved).
-        </p>
+                    <dt>Years IN retirement</dt>
+                    <dd>How many years do you expect to live in retirement?</dd>
 
-        <dl>
-            <dt>Years TO retirement</dt>
-            <dd>How many more years will you be earning an income?
-                <br>
-                &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
-                (0 if currently retired)</dd>
+                    <dt>Expected Income in retirement</dt>
+                    <dd>How much money will you need every year in retirement?
+                        <ul>
+                            <li>Use today's dollars; the calculator will figure out inflation.</li>
+                            <li>If you're already retired, how much are you spending right now?</li>
+                        </ul>
+                    </dd>
+                </dl>
 
-            <dt>Current savings</dt>
-            <dd>How much do you currently have saved?</dd>
+                <button type="button" class="return-btn btn btn-default btn-sm" style="margin-bottom:10px;">
+                    <span class="glyphicon glyphicon-arrow-right"></span> Return
+                </button>
 
-            <dt>Inflation</dt>
-            <dd>What do you expect inflation to be?</dd>
+            </main>
 
-            <dt>Investment return</dt>
-            <dd>What annual return do you expect to make on your investment?</dd>
+            <footer class="page-footer btn btn-md btn-default">
+                <a href="http://www.georgefisheradvisors.com">George Fisher Advisors LLC</a>
+            </footer>
 
-            <hr>
-            <dt>Years IN retirement</dt>
-            <dd>How many years do you expect to live in retirement?</dd>
+        </section>
 
-            <dt>Expected Income in retirement</dt>
-            <dd>How much money will you need every year in retirement?
-                <ul>
-                    <li>Use today's dollars; the calculator will figure out inflation.</li>
-                    <li>If you're already retired, how much are you spending right now?</li>
-                </ul>
-            </dd>
-        </dl>
-
-        <button type="button" class="return-btn btn btn-default btn-sm" style="margin-bottom:10px;">
-            <span class="glyphicon glyphicon-arrow-right"></span> Return
-        </button>
-
-    </main>
-
-    <footer class="page-footer btn btn-md btn-default">
-        <a href="http://www.georgefisheradvisors.com">George Fisher Advisors LLC</a>
-    </footer>
-
-</section>
-
-</div> <!-- class="container" -->
+    </div> <!-- class="container" -->
 
 <!--                                       -->
 <!-- code driving the calculations follows -->
 <!--                                       -->
 
 <script>
+    /**
+     * Financial Formulas
+     *
+     * citation for inclusion of PMT
+     * http://www.getobjects.com/Components/Finance/TVM/formulas.html
+     */
+
+    function FV(PV, PMT, i, n, type) {
+        var _i = i / 100;
+
+        var k = 1; /* 'end' */
+        if (type == 'beg') k = 1 + _i;
+
+        var lhs = (PMT * k) / _i;
+        var mid = Math.pow(1 + _i, n);
+        var rhs = PV + lhs;
+
+        return lhs - mid * rhs;
+    }
+    function PV(FV, PMT, i, n, type) {
+        var _i = i / 100;
+
+        var k = 1;  /* 'end' */
+        if (type == 'beg') k = 1 + _i;
+
+        var pmt = (PMT * k) / _i;
+        var mid = 1 / Math.pow(1+_i, n);
+        return (pmt - FV) * mid -pmt;
+    }
+    function PMT(i, n, PV, FV, type) {
+        var _i = i / 100;
+
+        var k = 1;  /* 'end' */
+        if (type == 'beg') k = 1 + _i;
+
+        var PVplusFV   = PV + FV;
+        var denom      = Math.pow(1+_i,n) - 1;
+        var frac       = PVplusFV / denom;
+        var PVplusFrac = PV + frac;
+
+        return PVplusFrac * (-_i / k);
+    }
+    function N(i, PMT, PV, FV) {
+        var _i = i / 100;
+        var n;
+        if ( _i == 0 ) {
+            n = - (FV + PV)/PMT;
+        } else {
+            n = Math.log((-FV * _i + PMT)/(PMT + _i * PV))/ Math.log(1 + _i);
+        }
+
+        return n;
+    }
+    function RATE(n, PV, FV, PMT) {
+        /* TODO: RATE when PMT is present */
+        if (PMT > 0) {
+            alert("RATE with PMT not implemented yet");
+            return NaN;
+        } else {
+            var log = (Math.log(Math.abs(PV)) - Math.log(Math.abs(FV))) / n;
+            return -100 * (Math.exp(log) - 1);
+        }
+    }
+    /**
+     * Present Value of a Growing Annuity Due
+     *
+     * @param P {float} The first-period's payment
+     * @param r {number} percent investment return (example: 5 represents 5%)
+     * @param g {number} percent rate at which P grows (e.g. inflation; example: 3 represents 3%)
+     * @param n {float} number of periods
+     *
+     * @returns {number} the size of the investment portfolio required to support payment P
+     *                   with an investment return of r and a rate of inflation of g
+     *
+     * citation: http://www.double-entry-bookkeeping.com/present-value/present-value-of-a-growing-annuity-due-formula/
+     *
+     */
+    function PVGAD(P, r, g, n) {
+        /* TODO: fix r, g edge cases */
+        var _r = r / 100;
+        var _g = g / 100;
+        if (_r < _g) {
+            return 0;
+        }
+        return (P * (1 + _r) * (1 - Math.pow((1 + _g), n) * Math.pow((1 + _r), -n) ) / (_r - _g));
+    }
 
 </script>
 
 <script>
-    // Return button displays #pageone
+    // Return button displays #main-page
     $('.return-btn').click(function() {
-        $('#pageone').show();
-        $('#pagetwo').hide();
-        $('#pagethree').hide();
+        $('#main-page').show();
+        $('#results-page').hide();
+        $('#help-page').hide();
     });
 
-    // Help button displays #pagethree
+    // Help button displays #help-page
     $('#help-btn').click(function() {
-        $('#pageone').hide();
-        $('#pagetwo').hide();
-        $('#pagethree').show();
+        $('#main-page').hide();
+        $('#results-page').hide();
+        $('#help-page').show();
     });
 
-    // Reset button refreshes the whole package from the server ()
+    // Reset button refreshes the app
     $('#reset-btn').click(function() {
-        $('#pageone').show();
-        $('#pagetwo').hide();
-        $('#pagethree').hide();
+        $('#main-page').show();
+        $('#results-page').hide();
+        $('#help-page').hide();
         location.reload();
     });
 
-    // =======================================================
-    // Calculate button finds the answer and displays #pagetwo
-    // =======================================================
+    // ============================================================
+    // Calculate button finds the answer and displays #results-page
+    // ============================================================
     $("#calc-btn").click(function () {
-        $('#pageone').hide();
-        $('#pagetwo').show();
-        $('#pagethree').hide();
+        $('#main-page').hide();
+        $('#results-page').show();
+        $('#help-page').hide();
 
         // Options button displays the alternative savings #options
         // this format is required because jQuery Template
         // creates the HTML dynamically
         $(document).on("click", "#options-btn", function() {
             $('#options').show();
+            $('#options-btn').hide();
             $('#middle-inner-options-return-btn').hide();
         });
         $(document).on("click", ".inner-options-return-btn",
                 function() {
-                    $('#pageone').show();
-                    $('#pagetwo').hide();
-                    $('#pagethree').hide();
+                    $('#main-page').show();
+                    $('#results-page').hide();
+                    $('#help-page').hide();
                 });
 
         // retrieve all the input values
@@ -340,20 +420,30 @@
         var yrsInRet_num = parseInt(yrsInRet);
         var income_num = parseFloat(income.replace(/[\$\,]/g, ''));
 
+        /* ============ these require fixes to PVGAD ============ */
         // investment return must be greater than inflation
         if (invReturn_num <= inflation_num) {
             alert("Investment Return must be greater than inflation");
-            $('#pageone').show();
-            $('#pagetwo').hide();
-            $('#pagethree').hide();
+            $('#main-page').show();
+            $('#results-page').hide();
+            $('#help-page').hide();
         }
+
+        // complain is inflation is zero
+        if (inflation_num == 0) {
+            alert("Inflation must be greater than zero");
+            $('#main-page').show();
+            $('#results-page').hide();
+            $('#help-page').hide();
+        }
+        /* ============ these require fixes to PVGAD ============ */
 
         // complain if years in retirement is zero
         if (yrsInRet_num == 0) {
             alert("Years In Retirement should be 1 or greater");
-            $('#pageone').show();
-            $('#pagetwo').hide();
-            $('#pagethree').hide();
+            $('#main-page').show();
+            $('#results-page').hide();
+            $('#help-page').hide();
         }
 
         // format retirement year and life expectancy
@@ -368,78 +458,83 @@
         var lifeExpectancy = currentYear + yrsToRet_num + yrsInRet_num;
 
         // The income required on the first year of retirement
-        // ---------------------------------------------------
+        // ===================================================
         // this is the future value of the current-dollar income required, adjusted for inflation
-        var initRetIncome = FV(income_num, inflation_num, yrsToRet_num);
+        var initRetIncome = FV(-income_num, 0, inflation_num, yrsToRet_num, 'end');
         var initRetIncome_fmt = '$' + Number(initRetIncome.toFixed(0)).toLocaleString();
 
 
         // I. The minimum portfolio required on the first day of retirement
-        // ----------------------------------------------------------------
-        // this is the Present Value of a Growing Annuity
-        var minRetPortfolio = PVGAD(initRetIncome, invReturn_num, inflation_num, yrsInRet);
+        // ================================================================
+        // minimum portfolio needed
+        var minRetPortfolio     = PVGAD(initRetIncome, invReturn_num, inflation_num, yrsInRet);
         var minRetPortfolio_fmt = '$' + Number(minRetPortfolio.toFixed(0)).toLocaleString();
 
         // monthly amount required
-        var savings_blurb = "";
-        if (retYear == "Currently retired") {
-            savings_blurb = "Your savings are sufficient."
-        } else {
-            savings_blurb = "Your savings will be enough when you retire in " + retYear + " (" +
-                    '$' + Number(FV(portfolio_num, invReturn_num, yrsToRet_num).toFixed(0)).toLocaleString() + ")";
-        }
+        var minPortMonthly     = 0;
+        var minPortMonthly_fmt = '$0';
+        var portfolioFV        = FV(-portfolio_num, 0, invReturn_num, yrsToRet_num, 'end');
+        var portfolioFV_fmt    = Number(portfolioFV.toFixed(0)).toLocaleString();
+        var savings_blurb      = "";
 
-        var minPortMonthly = 0;
-        if (FV(portfolio_num, invReturn_num, yrsToRet_num) < minRetPortfolio) {
-            minPortMonthly = -PMT(invReturn_num, 12, yrsToRet_num * 12, -portfolio_num, minRetPortfolio);
+        if (portfolioFV < minRetPortfolio) {  // too little
+            minPortMonthly     = PMT(invReturn_num / 12, yrsToRet_num * 12, portfolio_num, -minRetPortfolio, 'end');
+            minPortMonthly_fmt = '$' + Number(minPortMonthly.toFixed(0)).toLocaleString();
+
             if (retYear == "Currently retired") {
-                savings_blurb = "You have not saved enough to take out as much as you planned."
+                savings_blurb      = "You have not saved enough to take out as much as you planned."
+                minPortMonthly_fmt = '("retired" assumes no further savings possible)';
             } else {
                 savings_blurb = "You will need " + minRetPortfolio_fmt + " when you retire in "
                         + retYear +
                         " but your current savings will only grow to " +
-                        '$' + Number(FV(portfolio_num, invReturn_num, yrsToRet_num).toFixed(0)).toLocaleString()
-                         + ", so you need to save " + '$' + Number(minPortMonthly.toFixed(0)).toLocaleString()  + " per month";
+                        '$' + portfolioFV_fmt
+                        + ", so you need to save " + minPortMonthly_fmt + " per month";
             }
-        }
-        var minPortMonthly_fmt = '$' + Number(minPortMonthly.toFixed(0)).toLocaleString();
-        if (retYear == "Currently retired") {
-            if (FV(portfolio_num, invReturn_num, yrsToRet_num) < minRetPortfolio) {
-                minPortMonthly_fmt = '("retired" assumes no further savings possible)';
+
+        } else {                            // enough
+            if (retYear == "Currently retired") {
+                savings_blurb = "Your savings are sufficient."
             } else {
-                minPortMonthly_fmt = '';
+                savings_blurb = "Your savings will be enough when you retire in " + retYear + " (" +
+                        '$' + portfolioFV_fmt + ")";
             }
         }
 
+
         // II. The portfolio required to end retirement with your original minimum portfolio
-        // ---------------------------------------------------------------------------------
-        var pvMinRetPortfolio = PV(minRetPortfolio, invReturn_num, yrsInRet);
-        var maintainPortfolio = minRetPortfolio + pvMinRetPortfolio;
+        // =================================================================================
+        // minimum maintenance portfolio size
+        var pvMinRetPortfolio     = PV(-minRetPortfolio, 0, invReturn_num, yrsInRet, 'end');
+        var maintainPortfolio     = minRetPortfolio + pvMinRetPortfolio;
         var maintainPortfolio_fmt = '$' + Number(maintainPortfolio.toFixed(0)).toLocaleString();
 
         // find monthly payments
-        var maintainPortfolioMonthly = 0;
-        if (FV(portfolio_num, invReturn_num, yrsToRet_num) < maintainPortfolio) {
-            maintainPortfolioMonthly = -PMT(invReturn_num, 12, yrsToRet_num * 12, -portfolio_num, maintainPortfolio);
+        var maintainPortfolioMonthly     = 0;
+        var maintainPortfolioMonthly_fmt = '$0';
+        if (portfolioFV < maintainPortfolio) {
+            maintainPortfolioMonthly     = PMT(invReturn_num / 12, yrsToRet_num * 12, portfolio_num, -maintainPortfolio, 'end');
+            maintainPortfolioMonthly_fmt = '$' + Number(maintainPortfolioMonthly.toFixed(0)).toLocaleString();
+            if (retYear == "Currently retired")  maintainPortfolioMonthly_fmt = '("retired" assumes no further savings possible)';
         }
-        var maintainPortfolioMonthly_fmt = '$' + Number(maintainPortfolioMonthly.toFixed(0)).toLocaleString();
-        if (retYear == "Currently retired") {maintainPortfolioMonthly_fmt = '("retired" assumes no further savings possible)';}
 
 
         // III. The portfolio required to end retirement with your original minimum portfolio, adjusted for inflation
-        // ----------------------------------------------------------------------------------------------------------
-        var inflationAdjustedMinRetPortfolio = FV(minRetPortfolio, inflation_num, yrsInRet);
-        var pvInfAdjMinRetPortfolio = PV(inflationAdjustedMinRetPortfolio, invReturn_num, yrsInRet);
-        var maintainInfAdjPortfolio = minRetPortfolio + pvInfAdjMinRetPortfolio;
+        // ==========================================================================================================
+        // minimum inflation-adjusted maintenance portfolio size
+        var InfAdjMinRetPortfolio       = FV(-minRetPortfolio, 0, inflation_num, yrsInRet, 'end');
+        var pvInfAdjMinRetPortfolio     = PV(-InfAdjMinRetPortfolio, 0, invReturn_num, yrsInRet, 'end');
+        var maintainInfAdjPortfolio     = minRetPortfolio + pvInfAdjMinRetPortfolio;
         var maintainInfAdjPortfolio_fmt = '$' + Number(maintainInfAdjPortfolio.toFixed(0)).toLocaleString();
 
         // find monthly payments
-        var maintainInfAdjPortfolioMonthly = 0;
-        if (FV(portfolio_num, invReturn_num, yrsToRet_num) < maintainPortfolio) {
-            maintainInfAdjPortfolioMonthly = -PMT(invReturn_num, 12, yrsToRet_num * 12, -portfolio_num, maintainInfAdjPortfolio);
+        var maintainInfAdjPortfolioMonthly     = 0;
+        var maintainInfAdjPortfolioMonthly_fmt = "$0";
+        if (portfolioFV < maintainInfAdjPortfolio) {
+            maintainInfAdjPortfolioMonthly     = PMT(invReturn_num / 12, yrsToRet_num * 12, portfolio_num, -maintainInfAdjPortfolio, 'end');
+            maintainInfAdjPortfolioMonthly_fmt = '$' + Number(maintainInfAdjPortfolioMonthly.toFixed(0)).toLocaleString();
+            if (retYear == "Currently retired") maintainInfAdjPortfolioMonthly_fmt = '("retired" assumes no further savings possible)';
         }
-        var maintainInfAdjPortfolioMonthly_fmt = '$' + Number(maintainInfAdjPortfolioMonthly.toFixed(0)).toLocaleString();
-        if (retYear == "Currently retired") {maintainInfAdjPortfolioMonthly_fmt = '("retired" assumes no further savings possible)';}
 
 
         /**
@@ -474,12 +569,6 @@
          * autoNumeric: ensure the inputs are nicely formatted
          *              and within reasonable bounds
          */
-        jQuery(function($) {
-            $('#yrs-to-ret').autoNumeric('init', {vMin: '0', vMax: '99', wEmpty: 'zero'});
-        });
-        jQuery(function($) {
-            $('#yrs-in-ret').autoNumeric('init', {vMin: '0', vMax: '99', wEmpty: 'zero'});
-        });
         jQuery(function ($) {
             $('#portfolio').autoNumeric('init', {aSign: '$', vMin: '0', vMax: '100000000', wEmpty: 'zero'});
         });
