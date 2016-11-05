@@ -17,17 +17,17 @@
     <title>Saving For Retirement</title>
 
     <!-- jQuery -->
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="js/jquery-3.1.1.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7"></script>
 
     <!-- Twitter Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <!-- jQuery Template -->
-    <script src="js/jquery.loadTemplate.min.js"></script> <!-- https://github.com/codepb/jquery-template -->
+    <script src="js/jquery.loadTemplate.min.js" integrity="sha384-EWKwM0pvDDxPR2GCq8hgHY3st4UNfvBrzWV/xkT7QZMtcMxmVag4hogWh8FCrUCL"></script> <!-- https://github.com/codepb/jquery-template -->
 
     <!-- autoNumeric -->
-    <script src="js/autoNumeric-min.js"></script> <!-- http://www.decorplanit.com/plugin/ -->
+    <script src="js/autoNumeric-min.js" integrity="sha384-5kVk2zWNqXp9XTKjstXyu/hCKExERfRXDBPIBrx0IjHVLSEqSFkSzolnQWaI9TpK"></script> <!-- http://www.decorplanit.com/plugin/ -->
 
     <style>
         /**
@@ -54,12 +54,12 @@
                 <p style="text-align: center;font-weight: bold;">Saving for retirement</p>
             </header>
 
-            <main>
+            <div>
                 <form>
                     <!-- input fields -->
                     <div class="form-group col-xs-12">
                         <label for="yrs-to-ret">Years TO retirement:</label>
-                        <input type="number" name="yrs-to-ret" id="yrs-to-ret" value="20" min="0"
+                        <input type="text" name="yrs-to-ret" id="yrs-to-ret" value="20" 
                                placeholder="How many years until you retire?"><small>&nbsp;0 if retired</small>
                     </div>
                     <div class="form-group col-xs-12">
@@ -87,7 +87,7 @@
 
                     <div class="form-group col-xs-12">
                         <label for="yrs-in-ret">Years IN retirement:</label>
-                        <input type="number" name="yrs-in-ret" id="yrs-in-ret" value="20" min="1"
+                        <input type="text" name="yrs-in-ret" id="yrs-in-ret" value="20"
                                placeholder="How many years will you be retired?">
                     </div>
                     <div class="form-group col-xs-12">
@@ -107,7 +107,7 @@
                     </div>
 
                 </form>
-            </main>
+            </div>
 
             <footer class="page-footer btn btn-md btn-default  col-xs-12">
                 <a href="http://www.georgefisheradvisors.com">George Fisher Advisors LLC</a>
@@ -128,7 +128,7 @@
             </header>
 
             <!-- consists of the jQuery Template to be rendered in the javascript below -->
-            <main>
+            <div>
 
                 <div id="ans-target"></div>
 
@@ -194,7 +194,7 @@
                         </div>
                 </script>
 
-            </main>
+            </div>
 
             <footer class="page-footer btn btn-md btn-default" style="margin-top:10px;">
                 <a href="http://www.georgefisheradvisors.com">George Fisher Advisors LLC</a>
@@ -213,7 +213,7 @@
                 </button>
             </header>
 
-            <main>
+            <div>
                 <p>This calculator figures out how much to save
                     to have enough money after you retire.
                     <br>
@@ -252,7 +252,7 @@
                     <span class="glyphicon glyphicon-arrow-right"></span> Return
                 </button>
 
-            </main>
+            </div>
 
             <footer class="page-footer btn btn-md btn-default">
                 <a href="http://www.georgefisheradvisors.com">George Fisher Advisors LLC</a>
