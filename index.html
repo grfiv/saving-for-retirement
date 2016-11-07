@@ -17,17 +17,17 @@
     <title>Saving For Retirement</title>
 
     <!-- jQuery -->
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="js/jquery-latest.min.js" integrity="sha384-UM1JrZIpBwVf5jj9dTKVvGiiZPZTLVoq4sfdvIe9SBumsvCuv6AHDNtEiIb5h1kU"></script>
 
     <!-- Twitter Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <!-- jQuery Template -->
-    <script src="js/jquery.loadTemplate.min.js"></script> <!-- https://github.com/codepb/jquery-template -->
+    <script src="js/jquery.loadTemplate.min.js" integrity="sha384-EWKwM0pvDDxPR2GCq8hgHY3st4UNfvBrzWV/xkT7QZMtcMxmVag4hogWh8FCrUCL"></script> <!-- https://github.com/codepb/jquery-template -->
 
     <!-- autoNumeric -->
-    <script src="js/autoNumeric-min.js"></script> <!-- http://www.decorplanit.com/plugin/ -->
+    <script src="js/autoNumeric-min.js" integrity="sha384-5kVk2zWNqXp9XTKjstXyu/hCKExERfRXDBPIBrx0IjHVLSEqSFkSzolnQWaI9TpK"></script> <!-- http://www.decorplanit.com/plugin/ -->
 
     <style>
         /**
@@ -339,17 +339,55 @@
      * @returns {number} the size of the investment portfolio required to support payment P
      *                   with an investment return of r and a rate of inflation of g
      *
-     * citation: http://www.double-entry-bookkeeping.com/present-value/present-value-of-a-growing-annuity-due-formula/
+     * citations: http://www.double-entry-bookkeeping.com/present-value/present-value-of-a-growing-annuity-due-formula/
+     *            http://www.financeformulas.net/Present_Value_of_Growing_Annuity.html
+     *
+     *  NOTE: the first citation agrees with Excel
+     *        the second citation produces a more-believable IPGAP
      *
      */
     function PVGAD(P, r, g, n) {
         /* TODO: fix r, g edge cases */
+        /* TODO: reconcile the two calculations and Excel */
         var _r = r / 100;
         var _g = g / 100;
         if (_r < _g) {
             return 0;
         }
+
         return (P * (1 + _r) * (1 - Math.pow((1 + _g), n) * Math.pow((1 + _r), -n) ) / (_r - _g));
+        //var rhs = 1 - Math.pow((1+_g)/(1+_r), n);
+        //return (P / (_r-_g)) * rhs;
+    }
+
+    /**
+     * Initial Payment from a Growing Annuity Payment
+     *
+     * @param PV {float} the current portfolio size
+     * @param r {number} percent investment return (example: 5 represents 5%)
+     * @param g {number} percent rate at which P grows (e.g. inflation; example: 3 represents 3%)
+     * @param n {float} number of periods
+     *
+     * @returns {float} the initial payment, expected to grow g% per year
+     *
+     * citations: http://www.double-entry-bookkeeping.com/periodic-payment/growing-annuity-payment-formula-pv/
+     *            http://www.financeformulas.net/Growing-Annuity-Payment.html
+     *
+     * NOTE: the PVGAD of the first citation agrees exactly with Excel
+     *       the second produces a more-believable IPGAP
+     */
+    function IPGAP(PV, r, g, n) {
+        /* TODO: fix r, g edge cases */
+        /* TODO: reconcile the two calculations and Excel */
+        var _r = r / 100;
+        var _g = g / 100;
+        if (_r < _g) {
+            return 0;
+        }
+
+        return PV  * (_r - _g) / (1  - Math.pow((1 + _g), n) * Math.pow((1 + _r), -n) );
+        //var denom = 1 - Math.pow((1+_g)/(1+_r), n);
+        //return PV * (_r - _g) / denom;
     }
 
 </script>
@@ -487,8 +525,14 @@
             minPortMonthly_fmt = '$' + Number(minPortMonthly.toFixed(0)).toLocaleString();
 
             if (retYear == "Currently retired") {
-                savings_blurb      = "You have not saved enough to take out as much as you planned."
+                var possibleWD     = IPGAP(portfolio_num, invReturn_num, inflation_num, yrsInRet_num);
+                var possibleWD_fmt = '$' + Number(possibleWD.toFixed(0)).toLocaleString();
+                savings_blurb      = "You have not saved enough to take out as much as you planned ";
+                if (possibleWD < income_num) {
+                    savings_blurb = savings_blurb + "(a maximum of " + possibleWD_fmt + " per year is possible).";
+                }
                 minPortMonthly_fmt = '("retired" assumes no further savings possible)';
+                retBuffer_fmt = "a deficit"
             } else {
                 savings_blurb = "You will need " + minRetPortfolio_fmt + " when you retire in "
                         + retYear +
