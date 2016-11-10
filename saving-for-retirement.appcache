@@ -1,0 +1,16 @@
+CACHE MANIFEST
+# 2016-11-10 v1.0.0
+/saving-for-retirement/js/autoNumeric-min.js
+/saving-for-retirement/js/jquery.loadTemplate.min.js
+/saving-for-retirement/js/jquery-latest.min.js
+/saving-for-retirement/js/bootstrap.min.js
+/saving-for-retirement/css/bootstrap.min.css
+/saving-for-retirement/css/bootstrap.min.css
+/saving-for-retirement/saving-for-retirement.appcache
+
+NETWORK:
+*
+
+FALLBACK:
+https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js /saving-for-retirement/js/bootstrap.min.js
+https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css /saving-for-retirement/css/bootstrap.min.css
