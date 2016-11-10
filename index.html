@@ -223,8 +223,6 @@
             <dl>
                 <dt>Years TO retirement</dt>
                 <dd>How many more years will you be earning an income?
-                    <br>
-                    &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
                     (0 if currently retired)</dd>
 
                 <dt>Current savings</dt>
@@ -360,6 +358,7 @@
         return (P * (1 + _r) * (1 - Math.pow((1 + _g), n) * Math.pow((1 + _r), -n) ) / (_r - _g));
         //var rhs = 1 - Math.pow((1+_g)/(1+_r), n);
         //return (P / (_r-_g)) * rhs;
+        // ? r = g => return P / (1 + _r) see http://www.had2know.com/finance/present-value-growing-annuity.html
     }
 
     /**
@@ -390,6 +389,7 @@
         return PV  * (_r - _g) / (1  - Math.pow((1 + _g), n) * Math.pow((1 + _r), -n) );
         //var denom = 1 - Math.pow((1+_g)/(1+_r), n);
         //return PV * (_r - _g) / denom;
+        // ? r = g => return PV * (n / ( 1 + _r)) see http://web.utk.edu/~jwachowi/growing_annuity.pdf
     }
 
 </script>
