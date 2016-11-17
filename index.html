@@ -338,7 +338,7 @@
      * @param i {number} the nominal rate of interest or investment return as a percent: 5 == 5%
      * @param n {number} the number of periods
      * @param g {number} the periodic growth rate of the annuity payment (inflation) as a percent: 3 = 3%
-     * @paran begining_of_period {boolean} false => ordinary annuity (end of period)
+     * @param begining_of_period {boolean} false => ordinary annuity (end of period)
      *                                     true => annuity due (beginning of period)
      *                                     default = false (ordinary annuity)
      *
@@ -366,12 +366,12 @@
     /**
      * Future Value of a Growing Annuity
      *
-     * @prarm R {number} the receipt or payment for the first period
+     * @param R {number} the receipt or payment for the first period
      *
      * @param i {number} the nominal rate of interest or investment return as a percent: 5 == 5%
      * @param n {number} the number of periods
      * @param g {number} the periodic growth rate of the annuity payment (inflation) as a percent: 3 = 3%
-     * @paran begining_of_period {boolean} false => ordinary annuity (end of period)
+     * @param begining_of_period {boolean} false => ordinary annuity (end of period)
      *                                     true => annuity due (beginning of period)
      *                                     default = false (ordinary annuity)
      *
@@ -390,7 +390,7 @@
      * @param i {number} percent investment return (example: 5 represents 5%)
      * @param g {number} percent rate at which P grows (e.g. inflation; example: 3 represents 3%)
      * @param n {float} number of periods
-     * @paran begining_of_period {boolean} false => ordinary annuity (end of period)
+     * @param begining_of_period {boolean} false => ordinary annuity (end of period)
      *                                     true => annuity due (beginning of period)
      *                                     default = false (ordinary annuity)
      *
@@ -406,7 +406,7 @@
      * @param i {number} the nominal rate of interest or investment return as a percent: 5 == 5%
      * @param n {number} the number of periods
      * @param g {number} the periodic growth rate of the annuity payment (inflation) as a percent: 3 = 3%
-     * @paran begining_of_period {boolean} false => ordinary annuity (end of period)
+     * @param begining_of_period {boolean} false => ordinary annuity (end of period)
      *                                     true => annuity due (beginning of period)
      *                                     default = false (ordinary annuity)
      *
@@ -434,12 +434,12 @@
     /**
      * Present Value of a Growing Annuity
      *
-     * @prarm R {number} the receipt or payment for the first period
+     * @param R {number} the receipt or payment for the first period
      *
      * @param i {number} the nominal rate of interest or investment return as a percent: 5 == 5%
      * @param n {number} the number of periods
      * @param g {number} the periodic growth rate of the annuity payment (inflation) as a percent: 3 = 3%
-     * @paran begining_of_period {boolean} false => ordinary annuity (end of period)
+     * @param begining_of_period {boolean} false => ordinary annuity (end of period)
      *                                     true => annuity due (beginning of period)
      *                                     default = false (ordinary annuity)
      *
@@ -459,7 +459,7 @@
      * @param i {number} percent investment return (example: 5 represents 5%)
      * @param g {number} percent rate at which P grows (e.g. inflation; example: 3 represents 3%)
      * @param n {float} number of periods
-     * @paran begining_of_period {boolean} false => ordinary annuity (end of period)
+     * @param begining_of_period {boolean} false => ordinary annuity (end of period)
      *                                     true => annuity due (beginning of period)
      *                                     default = false (ordinary annuity)
      *
@@ -664,7 +664,7 @@
                     retBuffer_fmt: retBuffer_fmt,
                     lifeExpectancy: lifeExpectancy,
                     initRetIncome_fmt: initRetIncome_fmt,
-                    portfolio_num: '$' + Number(portfolio_num.toFixed(0)).toLocaleString(),
+                    portfolio_num: portfolio_fmt,
                     savings_blurb: savings_blurb,
                     minRetPortfolio_fmt: minRetPortfolio_fmt,
                     minPortMonthly_fmt: minPortMonthly_fmt,
