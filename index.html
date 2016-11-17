@@ -525,35 +525,36 @@
 </script>
 
 <script>
+    // store selectors for jQuery efficiency
+    var selectMainPage    = $('#main-page');
+    var selectResultsPage = $('#results-page');
+    var selectHelpPage    = $('#help-page');
+
     // Return button displays #main-page
     $('.return-btn').click(function() {
-        $('#main-page').show();
-        $('#results-page').hide();
-        $('#help-page').hide();
+        selectMainPage.show();
+        selectResultsPage.hide();
+        selectHelpPage.hide();
     });
 
     // Help button displays #help-page
     $('#help-btn').click(function() {
-        $('#main-page').hide();
-        $('#results-page').hide();
-        $('#help-page').show();
+        selectMainPage.hide();
+        selectResultsPage.hide();
+        selectHelpPage.show();
     });
 
     // Reset button refreshes the app
     $('#reset-btn').click(function() {
-        $('#main-page').show();
-        $('#results-page').hide();
-        $('#help-page').hide();
+        selectMainPage.show();
+        selectResultsPage.hide();
+        selectHelpPage.hide();
         location.reload();
     });
 
     // ============================================================
     // Calculate button finds the answer and displays #results-page
     // ============================================================
-    var selectMainPage    = $('#main-page');
-    var selectResultsPage = $('#results-page');
-    var selectHelpPage    = $('#help-page');
-
     $("#calc-btn").click(function () {
         selectMainPage.hide();
         selectResultsPage.show();
@@ -569,9 +570,9 @@
         });
         $(document).on("click", ".inner-options-return-btn",
                 function() {
-                    $('#main-page').show();
-                    $('#results-page').hide();
-                    $('#help-page').hide();
+                    selectMainPage.show();
+                    selectResultsPage.hide();
+                    selectHelpPage.hide();
                 });
 
         // retrieve all the input values
@@ -597,9 +598,9 @@
         // complain if years in retirement is zero
         if (yrsInRet_num == 0) {
             alert("Years In Retirement should be 1 or greater");
-            $('#main-page').show();
-            $('#results-page').hide();
-            $('#help-page').hide();
+            selectMainPage.show();
+            selectResultsPage.hide();
+            selectHelpPage.hide();
         }
 
         // format retirement year and life expectancy
