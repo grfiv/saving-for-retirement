@@ -384,6 +384,23 @@
         return R * FVIFGA(i, n, g, begining_of_period);
     }
     /**
+     * Initial Payment from a Growing Annuity where the future portfolio value is known
+     *
+     * @param FV {float} the future portfolio size
+     * @param i {number} percent investment return (example: 5 represents 5%)
+     * @param g {number} percent rate at which P grows (e.g. inflation; example: 3 represents 3%)
+     * @param n {float} number of periods
+     * @paran begining_of_period {boolean} false => ordinary annuity (end of period)
+     *                                     true => annuity due (beginning of period)
+     *                                     default = false (ordinary annuity)
+     *
+     * @returns {float} the initial payment, expected to grow g% per year
+     *
+     */
+     function IPFVGA(FV, i, g, n, begining_of_period) {
+        return FV / FVIFGA(i, n, g, begining_of_period)
+    }
+    /**
      * Present Value Interest Factor of a Growing Annuity
      *
      * @param i {number} the nominal rate of interest or investment return as a percent: 5 == 5%
@@ -436,7 +453,7 @@
     }
 
     /**
-     * Initial Payment from a Growing Annuity
+     * Initial Payment from a Growing Annuity where the current portfolio value is known
      *
      * @param PV {float} the current portfolio size
      * @param i {number} percent investment return (example: 5 represents 5%)
@@ -449,7 +466,7 @@
      * @returns {float} the initial payment, expected to grow g% per year
      *
      */
-    function IPGA(PV, i, g, n, begining_of_period) {
+    function IPPVGA(PV, i, g, n, begining_of_period) {
         return PV / PVIFGA(i, n, g, begining_of_period)
     }
 </script>
@@ -570,7 +587,7 @@
             minPortMonthly_fmt = '$' + Number(minPortMonthly.toFixed(0)).toLocaleString();
 
             if (retYear == "Currently retired") {
-                var possibleWD     = IPGA(portfolio_num, invReturn_num, inflation_num, yrsInRet_num, true);
+                var possibleWD     = IPPVGA(portfolio_num, invReturn_num, inflation_num, yrsInRet_num, true);
                 var possibleWD_fmt = '$' + Number(possibleWD.toFixed(0)).toLocaleString();
                 savings_blurb      = "You have not saved enough to take out as much as you planned ";
                 if (possibleWD < income_num) {
