@@ -272,6 +272,17 @@
      * http://www.getobjects.com/Components/Finance/TVM/formulas.html
      */
 
+    /**
+     * Future Value
+     *
+     * @param PV {number} Present Value
+     * @param PMT {number} fixed payments per period
+     * @param i {number} rate of interest (as percent 3 == 3%)
+     * @param n {number} number of periods
+     * @param type {string} 'end' end of period; 'beg' beginning of period
+     * @returns {number} Future Value
+     *
+     */
     function FV(PV, PMT, i, n, type) {
         if (i == 0) return Math.abs(PV) + PMT * n;
 
@@ -286,6 +297,17 @@
 
         return lhs - mid * rhs;
     }
+    /**
+     * Present Value
+     *
+     * @param FV {number} Future Value
+     * @param PMT {number} fixed payments per period
+     * @param i {number} rate of interest (as percent 3 == 3%)
+     * @param n {number} number of periods
+     * @param type {string} 'end' end of period; 'beg' beginning of period
+     * @returns {number} Present Value
+     *
+     */
     function PV(FV, PMT, i, n, type) {
         if (i == 0) return Math.abs(FV) + PMT * n;
 
@@ -298,6 +320,17 @@
         var mid = 1 / Math.pow(1+_i, n);
         return (pmt - FV) * mid -pmt;
     }
+    /**
+     * Periodic Payments
+     *
+     * @param i {number} rate of interest (as percent 3 == 3%)
+     * @param n {number} number of periods
+     * @param PV {number} Present Value
+     * @param FV {number} Future Value
+     * @param type {string} 'end' end of period; 'beg' beginning of period
+     * @returns {number} Fixed Periodic Payments
+     *
+     */
     function PMT(i, n, PV, FV, type) {
         var _i = i / 100;
 
@@ -311,6 +344,16 @@
 
         return PVplusFrac * (-_i / k);
     }
+    /**
+     * Number of Periods
+     *
+     * @param i {number} rate of interest (as percent 3 == 3%)
+     * @param PMT {number} fixed payments per period
+     * @param PV {number} Present Value
+     * @param FV {number} Future Value
+     * @returns {*} Number of Periods
+     *
+     */
     function N(i, PMT, PV, FV) {
         var _i = i / 100;
         var n;
@@ -322,6 +365,16 @@
 
         return n;
     }
+    /**
+     * Rate of Return
+     *
+     * @param n {number} number of periods
+     * @param PV {number} Present Value
+     * @param FV {number} Future Value
+     * @param PMT {number} fixed payments per period
+     * @returns {*} The rate of interest required to produce the input parameters (as a percent 3 == 3%)
+     *
+     */
     function RATE(n, PV, FV, PMT) {
         /* TODO: RATE when PMT is present */
         if (PMT > 0) {
@@ -375,7 +428,7 @@
      *                                     true => annuity due (beginning of period)
      *                                     default = false (ordinary annuity)
      *
-     * @returns {number} the FVGA
+     * @returns {number} the amount remaining after periodic growing payments
      *
      * citation: Auxier, Wachowicz GROWING ANNUITIES http://web.utk.edu/~jwachowi/growing_annuity.pdf
      *
@@ -410,7 +463,7 @@
      *                                     true => annuity due (beginning of period)
      *                                     default = false (ordinary annuity)
      *
-     * @returns {number} the fractional PVIFGA
+     * @returns {number} the fractional interest factor required to produce the Present Value of a Growing Annuity
      *
      * citation: Auxier, Wachowicz GROWING ANNUITIES http://web.utk.edu/~jwachowi/growing_annuity.pdf
      *
@@ -443,7 +496,7 @@
      *                                     true => annuity due (beginning of period)
      *                                     default = false (ordinary annuity)
      *
-     * @returns {number} the PVGA
+     * @returns {number} the the amount required to invest to produce a growing periodic payment
      *
      * citation: Auxier, Wachowicz GROWING ANNUITIES http://web.utk.edu/~jwachowi/growing_annuity.pdf
      *
@@ -497,10 +550,14 @@
     // ============================================================
     // Calculate button finds the answer and displays #results-page
     // ============================================================
+    var selectMainPage    = $('#main-page');
+    var selectResultsPage = $('#results-page');
+    var selectHelpPage    = $('#help-page');
+
     $("#calc-btn").click(function () {
-        $('#main-page').hide();
-        $('#results-page').show();
-        $('#help-page').hide();
+        selectMainPage.hide();
+        selectResultsPage.show();
+        selectHelpPage.hide();
 
         // Options button displays the alternative savings #options
         // this format is required because jQuery Template
