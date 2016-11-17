@@ -452,72 +452,6 @@
     function IPGA(PV, i, g, n, begining_of_period) {
         return PV / PVIFGA(i, n, g, begining_of_period)
     }
-
-    /* ==================================== */
-    /**
-     * Present Value of a Growing Annuity Due
-     *
-     * @param P {float} The first-period's payment
-     * @param r {number} percent investment return (example: 5 represents 5%)
-     * @param g {number} percent rate at which P grows (e.g. inflation; example: 3 represents 3%)
-     * @param n {float} number of periods
-     *
-     * @returns {number} the size of the investment portfolio required to support payment P
-     *                   with an investment return of r and a rate of inflation of g
-     *
-     * citations: http://www.double-entry-bookkeeping.com/present-value/present-value-of-a-growing-annuity-due-formula/
-     *            http://www.financeformulas.net/Present_Value_of_Growing_Annuity.html
-     *
-     *  NOTE: the first citation agrees with Excel
-     *        the second citation produces a more-believable IPGAP
-     *
-     */
-    function PVGAD(P, r, g, n) {
-        /* TODO: fix r, g edge cases */
-        /* TODO: reconcile the two calculations and Excel */
-        var _r = r / 100;
-        var _g = g / 100;
-        if (_r < _g) {
-            return 0;
-        }
-
-        return (P * (1 + _r) * (1 - Math.pow((1 + _g), n) * Math.pow((1 + _r), -n) ) / (_r - _g));
-        //var rhs = 1 - Math.pow((1+_g)/(1+_r), n);
-        //return (P / (_r-_g)) * rhs;
-        // ? r = g => return P / (1 + _r) see http://www.had2know.com/finance/present-value-growing-annuity.html
-    }
-
-    /**
-     * Initial Payment from a Growing Annuity Payment
-     *
-     * @param PV {float} the current portfolio size
-     * @param r {number} percent investment return (example: 5 represents 5%)
-     * @param g {number} percent rate at which P grows (e.g. inflation; example: 3 represents 3%)
-     * @param n {float} number of periods
-     *
-     * @returns {float} the initial payment, expected to grow g% per year
-     *
-     * citations: http://www.double-entry-bookkeeping.com/periodic-payment/growing-annuity-payment-formula-pv/
-     *            http://www.financeformulas.net/Growing-Annuity-Payment.html
-     *
-     * NOTE: the PVGAD of the first citation agrees exactly with Excel
-     *       the second produces a more-believable IPGAP
-     */
-    function IPGAP(PV, r, g, n) {
-        /* TODO: fix r, g edge cases */
-        /* TODO: reconcile the two calculations and Excel */
-        var _r = r / 100;
-        var _g = g / 100;
-        if (_r < _g) {
-            return 0;
-        }
-
-        return PV  * (_r - _g) / (1  - Math.pow((1 + _g), n) * Math.pow((1 + _r), -n) );
-        //var denom = 1 - Math.pow((1+_g)/(1+_r), n);
-        //return PV * (_r - _g) / denom;
-        // ? r = g => return PV * (n / ( 1 + _r)) see http://web.utk.edu/~jwachowi/growing_annuity.pdf
-    }
-
 </script>
 
 <script>
@@ -586,24 +520,6 @@
         var portfolio_fmt = '$' + Number(portfolio_num.toFixed(0)).toLocaleString();
         var retBuffer_fmt = "$0";
 
-        /* ============ these require fixes to PVGAD ============ */
-        // investment return must be greater than inflation
-        /*if (invReturn_num <= inflation_num) {
-            alert("Investment Return must be greater than inflation");
-            $('#main-page').show();
-            $('#results-page').hide();
-            $('#help-page').hide();
-        } */
-
-        // complain is inflation is zero
-        /*if (inflation_num == 0) {
-            alert("Inflation must be greater than zero");
-            $('#main-page').show();
-            $('#results-page').hide();
-            $('#help-page').hide();
-        }*/
-        /* ============ these require fixes to PVGAD ============ */
-
         // complain if years in retirement is zero
         if (yrsInRet_num == 0) {
             alert("Years In Retirement should be 1 or greater");
@@ -639,7 +555,6 @@
         // ================================================================
         // minimum portfolio needed
         var minRetPortfolio     =  PVGA (initRetIncome, invReturn_num, yrsInRet, inflation_num,  true);
-        //var minRetPortfolio     = PVGAD(initRetIncome, invReturn_num, inflation_num, yrsInRet);
         var minRetPortfolio_fmt = '$' + Number(minRetPortfolio.toFixed(0)).toLocaleString();
 
         // monthly amount required
@@ -651,11 +566,11 @@
 
         if (portfolioFV < minRetPortfolio) {  // too little
             minPortMonthly     = PMT(invReturn_num / 12, yrsToRet_num * 12, portfolio_num, -minRetPortfolio, 'end');
+            if (invReturn_num == 0) minPortMonthly = (minRetPortfolio - portfolio_num) / (yrsToRet_num * 12);
             minPortMonthly_fmt = '$' + Number(minPortMonthly.toFixed(0)).toLocaleString();
 
             if (retYear == "Currently retired") {
                 var possibleWD     = IPGA(portfolio_num, invReturn_num, inflation_num, yrsInRet_num, true);
-                //var possibleWD     = IPGAP(portfolio_num, invReturn_num, inflation_num, yrsInRet_num);
                 var possibleWD_fmt = '$' + Number(possibleWD.toFixed(0)).toLocaleString();
                 savings_blurb      = "You have not saved enough to take out as much as you planned ";
                 if (possibleWD < income_num) {
