@@ -273,6 +273,8 @@
      */
 
     function FV(PV, PMT, i, n, type) {
+        if (i == 0) return Math.abs(PV) + PMT * n;
+
         var _i = i / 100;
 
         var k = 1; /* 'end' */
@@ -285,6 +287,8 @@
         return lhs - mid * rhs;
     }
     function PV(FV, PMT, i, n, type) {
+        if (i == 0) return Math.abs(FV) + PMT * n;
+
         var _i = i / 100;
 
         var k = 1;  /* 'end' */
@@ -401,7 +405,7 @@
         begining_of_period = typeof begining_of_period !== 'undefined' ? begining_of_period : false;
 
         if (_i != _g) {
-            var numerator = 1 +  Math.pow(((1 + _g) / (1 + _i)), n) ;
+            var numerator = 1 -  Math.pow(((1 + _g) / (1 + _i)), n) ;
             var denominator = (_i - _g);
             ret = numerator / denominator;
         } else {
@@ -429,6 +433,24 @@
      */
     function PVGA (R, i, n, g,  begining_of_period) {
         return R * PVIFGA(i, n, g, begining_of_period);
+    }
+
+    /**
+     * Initial Payment from a Growing Annuity
+     *
+     * @param PV {float} the current portfolio size
+     * @param i {number} percent investment return (example: 5 represents 5%)
+     * @param g {number} percent rate at which P grows (e.g. inflation; example: 3 represents 3%)
+     * @param n {float} number of periods
+     * @paran begining_of_period {boolean} false => ordinary annuity (end of period)
+     *                                     true => annuity due (beginning of period)
+     *                                     default = false (ordinary annuity)
+     *
+     * @returns {float} the initial payment, expected to grow g% per year
+     *
+     */
+    function IPGA(PV, i, g, n, begining_of_period) {
+        return PV / PVIFGA(i, n, g, begining_of_period)
     }
 
     /* ==================================== */
@@ -566,20 +588,20 @@
 
         /* ============ these require fixes to PVGAD ============ */
         // investment return must be greater than inflation
-        if (invReturn_num <= inflation_num) {
+        /*if (invReturn_num <= inflation_num) {
             alert("Investment Return must be greater than inflation");
             $('#main-page').show();
             $('#results-page').hide();
             $('#help-page').hide();
-        }
+        } */
 
         // complain is inflation is zero
-        if (inflation_num == 0) {
+        /*if (inflation_num == 0) {
             alert("Inflation must be greater than zero");
             $('#main-page').show();
             $('#results-page').hide();
             $('#help-page').hide();
-        }
+        }*/
         /* ============ these require fixes to PVGAD ============ */
 
         // complain if years in retirement is zero
@@ -616,7 +638,8 @@
         // I. The minimum portfolio required on the first day of retirement
         // ================================================================
         // minimum portfolio needed
-        var minRetPortfolio     = PVGAD(initRetIncome, invReturn_num, inflation_num, yrsInRet);
+        var minRetPortfolio     =  PVGA (initRetIncome, invReturn_num, yrsInRet, inflation_num,  true);
+        //var minRetPortfolio     = PVGAD(initRetIncome, invReturn_num, inflation_num, yrsInRet);
         var minRetPortfolio_fmt = '$' + Number(minRetPortfolio.toFixed(0)).toLocaleString();
 
         // monthly amount required
@@ -631,7 +654,8 @@
             minPortMonthly_fmt = '$' + Number(minPortMonthly.toFixed(0)).toLocaleString();
 
             if (retYear == "Currently retired") {
-                var possibleWD     = IPGAP(portfolio_num, invReturn_num, inflation_num, yrsInRet_num);
+                var possibleWD     = IPGA(portfolio_num, invReturn_num, inflation_num, yrsInRet_num, true);
+                //var possibleWD     = IPGAP(portfolio_num, invReturn_num, inflation_num, yrsInRet_num);
                 var possibleWD_fmt = '$' + Number(possibleWD.toFixed(0)).toLocaleString();
                 savings_blurb      = "You have not saved enough to take out as much as you planned ";
                 if (possibleWD < income_num) {
