@@ -391,11 +391,11 @@
      * @param i {number} the nominal rate of interest or investment return as a percent: 5 == 5%
      * @param n {number} the number of periods
      * @param g {number} the periodic growth rate of the annuity payment (inflation) as a percent: 3 = 3%
-     * @param begining_of_period {boolean} false => ordinary annuity (end of period)
-     *                                     true => annuity due (beginning of period)
+     * @param begining_of_period {boolean} false => ordinary annuity (end of period);
+     *                                     true => annuity due (beginning of period);
      *                                     default = false (ordinary annuity)
      *
-     * @returns {number} the fractional FVIFGA
+     * @returns {number} the fractional interest factor required to produce the Future Value of a Growing Annuity
      *
      * citation: Auxier, Wachowicz GROWING ANNUITIES http://web.utk.edu/~jwachowi/growing_annuity.pdf
      *
@@ -448,6 +448,8 @@
      *                                     default = false (ordinary annuity)
      *
      * @returns {float} the initial payment, expected to grow g% per year
+     *
+     * citation: Auxier, Wachowicz GROWING ANNUITIES http://web.utk.edu/~jwachowi/growing_annuity.pdf
      *
      */
      function IPFVGA(FV, i, g, n, begining_of_period) {
@@ -517,6 +519,8 @@
      *                                     default = false (ordinary annuity)
      *
      * @returns {float} the initial payment, expected to grow g% per year
+     *
+     * citation: Auxier, Wachowicz GROWING ANNUITIES http://web.utk.edu/~jwachowi/growing_annuity.pdf
      *
      */
     function IPPVGA(PV, i, g, n, begining_of_period) {
